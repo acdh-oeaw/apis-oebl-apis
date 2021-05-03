@@ -46,6 +46,7 @@ pandas = "0.25.3"
 django-allow-cidr = "^0.3.1"
 mysqlclient = "^2.0.2"
 apis-core = "^0.16.10"
+apis-highlighter = "^0.8.7"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
