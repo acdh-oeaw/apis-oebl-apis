@@ -14,6 +14,7 @@ DEV_VERSION = os.environ.get("APIS_DEV_VERSION", True)
 
 INSTALLED_APPS += ["gm2m", "apis_highlighter", "corsheaders"]
 
+CORS_ALLOWED_ORIGINS = ["https://sennierer.github.io/"]
 
 ALLOWED_HOSTS = re.sub(
     r"https?://",
