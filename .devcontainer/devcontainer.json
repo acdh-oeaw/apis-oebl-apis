@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.155.1/containers/python-3-postgres
 // Update the VARIANT arg in docker-compose.yml to pick a Python version: 3, 3.8, 3.7, 3.6 
 {
-	"name": "Python 3.6 & Apis-core & mariadb",
+	"name": "APIS-OEBL dev container",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspace",
@@ -32,13 +32,16 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		8000,
-		3306
+		3306,
+		8983
 	],
 	"remoteEnv": {
-		"DATABASE_URL": "mysql://root:mariadb@db:3306/apisdb"
+		"DATABASE_URL": "mysql://root:mariadb@db:3306/apisoebldb",
+		"DJANGO_SETTINGS_MODULE": "apis.settings.server",
+		"APIS_HAYSTACK_URL": "db"
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "poetry config virtualenvs.create false && poetry lock && poetry install",
+	"postCreateCommand": "poetry config virtualenvs.create false && poetry lock && poetry install && sudo chmod 777 /var/apis_solr_remote && cp -r /workspace/theme/solrdata/apis_solr /var/apis_solr_remote/apis_solr && curl http://db:8983/solr/admin/cores -d action=CREATE -d name=apis_solr -d configSet=/var/solr/apis_solr/apis_solr",
 	"postStartCommand": "poetry run python manage.py migrate",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"

@@ -12,9 +12,17 @@ DEBUG = True
 
 DEV_VERSION = os.environ.get("APIS_DEV_VERSION", True)
 
-INSTALLED_APPS += ["gm2m", "apis_highlighter", "corsheaders"]
+INSTALLED_APPS += ["apis_highlighter", "corsheaders", "haystack", "theme", "leaflet"]
 
-CORS_ALLOWED_ORIGINS = ["https://sennierer.github.io/"]
+CORS_ALLOWED_ORIGINS = ["https://sennierer.github.io"]
+
+HAYSTACK_CONNECTIONS = {
+    "default": {
+        "ENGINE": "haystack.backends.solr_backend.SolrEngine",
+        "URL": f"http://{os.environ.get('APIS_HAYSTACK_URL', 'apissolr')}:8983/solr/{os.environ.get('APIS_HAYSTACK_CORE', 'apis_solr')}",
+        "ADMIN_URL": f"http://{os.environ.get('APIS_HAYSTACK_URL', 'apissolr')}:8983/solr/admin/cores",
+    }
+}
 
 ALLOWED_HOSTS = re.sub(
     r"https?://",
@@ -44,7 +52,7 @@ DATABASES = {}
 
 DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
-APIS_BASE_URI = "https://apis-edits.acdh-dev.oeaw.ac.at/"
+APIS_BASE_URI = "https://apis.acdh.oeaw.ac.at/"
 
 APIS_SKOSMOS = {
     "url": os.environ.get("APIS_SKOSMOS", "https://vocabs.acdh-dev.oeaw.ac.at"),
