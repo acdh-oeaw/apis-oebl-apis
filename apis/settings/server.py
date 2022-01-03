@@ -12,7 +12,7 @@ DEBUG = True
 
 DEV_VERSION = os.environ.get("APIS_DEV_VERSION", True)
 
-INSTALLED_APPS += ["apis_highlighter", "corsheaders", "haystack", "theme", "leaflet"]
+INSTALLED_APPS += ["apis_highlighter", "corsheaders", "haystack", "theme", "leaflet", "sass_processor"]
 
 CORS_ALLOWED_ORIGINS = ["https://sennierer.github.io"]
 
@@ -78,5 +78,21 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True,
 )
+
+SASS_ROOT = os.path.join(BASE_DIR, 'theme', 'static','theme', 'scss', 'fundament_oebl')
+
+SASS_PROCESSOR_ROOT = SASS_ROOT
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+
 
 PROJECT_NAME = "apis"

@@ -91,6 +91,8 @@ def enrich_person_context(person_object, context):
         context['werkverzeichnis'] = wv[0].text
     else:
         context['werkverzeichnis'] = False
+    # dummy data für artikelversionen
+    context['versionen']  = ['15.9.1995','20.11.2004','9.3.2021']   
     return context
 
 
